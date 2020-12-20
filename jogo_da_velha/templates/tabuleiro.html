@@ -1,0 +1,23 @@
+{% extends "model-page.html" %}
+
+{% block content %}
+
+
+<table border="1">
+    <tr>
+        <td> <h3>{{ tabuleiro.nome }}!</h3> </td> <td>{{ tabuleiro.jogador1 }}</td> <td>{{ tabuleiro.jogador2 }}</td> <td>{{ tabuleiro.jogador_da_vez }}</td>
+    </tr>
+    <tr>
+        <td><a href=""><div>{{ tabuleiro.casa1 }}</div></a></td> <td><a href="">{{ tabuleiro.casa2 }}</a></td> <td><a href="">{{ tabuleiro.casa3 }}</a></td>
+    </tr>
+    <tr>
+        <td><a href="">{{ tabuleiro.casa4 }}</a></td> <td><a href="">{{ tabuleiro.casa5 }}</a></td> <td><a href="">{{ tabuleiro.casa6 }}</a></td>
+    </tr>
+    <tr>
+        <td><a href="">{{ tabuleiro.casa7 }}</a></td> <td><a href="">{{ tabuleiro.casa8 }}</a></td> <td><a href="">{{ tabuleiro.casa9 }}</a></td>
+    </tr>
+
+
+</table>
+
+{% endblock %}

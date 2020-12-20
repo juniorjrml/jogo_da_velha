@@ -15,13 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+from django.contrib.auth.urls import urlpatterns
 from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
     path('tabuleiros', views.lista_tabuleiros),
-    path('usuario/register', views.registra_usuario)
+    path('tabuleiro/<int:id_tabuleiro>', views.tabuleiro),
+    path('usuario/register', views.registra_usuario),
+    path('login/', views.login_usuario),
+    path('login/submit', views.submit_login),
+    path('logout/', views.logout_user)
 ]
 
 urlpatterns += [

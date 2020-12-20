@@ -1,19 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form method="POST">{% csrf_token %}
-    <table>
-         <tr>
-             {{ form }}
-         </tr>
-        <tr>
-            <td><button type="button">Cancelar</button> </td><td><button type="submit">registrar</button> </td>
-        </tr>
-    </table>
-</form>
-</body>
-</html>
+    <html lang="pt-br">
+        <head>
+            <meta charset="UTF-8">
+            <title>Login</title>
+        </head>
+        <body>
+            <div align="center">
+
+                <h2>Login:</h2>
+                <form action="submit" method="POST"> {% csrf_token %}
+                    <table>
+                        <tr>
+                            <td>
+                                <label>Usuario</label>
+                            </td>
+                            <td>
+                                <input type="text" name="usuario">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Senha</label>
+                            </td>
+                            <td>
+                                <input type="password" name="senha">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td align="center">
+                                <button type="submit">Entrar</button><a href="/usuario/register"><button type="button">Cadastrar</button></a>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </form>
+                {% for message in messages %}
+                <strong>*</strong> <i>{{ message }}</i>
+                {% endfor %}
+            </div>
+        </body>
+    </html>

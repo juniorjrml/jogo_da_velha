@@ -24,6 +24,7 @@ STATIC_DIR = os.path.join(BASE_DIR, "static")
 with open('secret_key.txt') as senha:
     SECRET_KEY = senha.readline()
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'jogo_da_velha.urls'

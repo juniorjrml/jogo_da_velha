@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST">{% csrf_token %}
+    <table>
+         <tr>
+             {{ form }}
+         </tr>
+        <tr>
+            <td><a href="/"><button type="button">Cancelar</button></a> </td><td><button type="submit">registrar</button> </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

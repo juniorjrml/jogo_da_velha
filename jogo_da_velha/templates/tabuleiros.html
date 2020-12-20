@@ -1,13 +1,22 @@
 {% extends "model-page.html" %}
 {% block content %}
 <h3>Tabueiros!</h3>
+<table border="0">
+    <tr>
 
+        <td><b>Nome do Tabuleiro</b></td>
+        <td><b>Nome do Jogador 1</b></td>
+        <td><b>Nome do Jogador 2</b></td>
+
+    </tr>
 {% for tabuleiro in tabuleiros %}
-    <div id="container">
-        <div>{{ tabuleiro.nome }}</div>
-        <div>{{ tabuleiro.jogador1 }}</div>
-        <div>{{ tabuleiro.jogador2 }}</div>
-    </div>
-{% endfor %}
+        <tr align="center">
+            <td>{{ tabuleiro.nome }}</td>
+            <td>{{ tabuleiro.jogador1 }}</td>
+            <td>{{ tabuleiro.jogador2 }}</td>
+            <td><a href="/tabuleiro/{{ tabuleiro.id }}">Ver</a></td>
+        </tr>
 
+{% endfor %}
+    </table>
 {% endblock %}
