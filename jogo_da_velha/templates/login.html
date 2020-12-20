@@ -5,16 +5,15 @@
     <title>Title</title>
 </head>
 <body>
- <table>
-     <tr>
-         <td>Username:</td><td>{{ form.username }}</td>
-     </tr>
-     <tr>
-         <td>senha:</td><td>{{ form.password }}</td>
-     </tr>
-     <tr>
-         <td>email:</td><td>{{ form.email }}</td>
-     </tr>
- </table>
+<form method="POST">{% csrf_token %}
+    <table>
+         <tr>
+             {{ form }}
+         </tr>
+        <tr>
+            <td><button type="button">Cancelar</button> </td><td><button type="submit">registrar</button> </td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>
