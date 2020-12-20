@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    {% include "conexoes_estilos.html" %}
+    {% include "model-header.html" %}
+</head>
+<body>
+    {% include "logo-page.html" %}
+    {% block content %} {% endblock %}
+    {% include "model-footer.html" %}
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% extends "model-page.html" %}
+{% block content %}
+<h3>Tabueiros!</h3>
+
+{% for tabuleiro in tabuleiros %}
+    <div id="container">
+        <div>{{ tabuleiro.nome }}</div>
+        <div>{{ tabuleiro.jogador1 }}</div>
+        <div>{{ tabuleiro.jogador2 }}</div>
+    </div>
+{% endfor %}
+
+{% endblock %}

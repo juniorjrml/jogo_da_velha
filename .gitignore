@@ -1,0 +1,4 @@
+*/__pycache__/
+secret_key.txt
+venv/
+.idea
