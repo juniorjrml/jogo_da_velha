@@ -27,6 +27,7 @@ urlpatterns = [
     path('tabuleiro/registrajogador/<int:id_tabuleiro>', views.registrar_jg),
     path('tabuleiro/abandonar/<int:id_tabuleiro>', views.abandonar_jg),
     path('tabuleiro/jogada/<int:id_tabuleiro>/<int:casa>', views.registrar_jogada),
+    path('tabuleiro/atualizar/<int:id_tabuleiro>/', views.atualiza),
     path('usuario/register', views.registra_usuario),
     path('login/', views.login_usuario),
     path('login/submit', views.submit_login),

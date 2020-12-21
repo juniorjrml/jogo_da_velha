@@ -6,6 +6,36 @@ from .models import Tabuleiro, User
 from .form_user import UserForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
+from django.http import JsonResponse
+
+@login_required(login_url='/login/')
+def atualiza(request, id_tabuleiro):
+    dados = {}
+    user = request.user
+    tabuleiro = Tabuleiro.objects.get(id=id_tabuleiro)
+    vitoria = tabuleiro.e_vitoria()
+    if vitoria == 0:
+        dados['tabuleiro'] = tabuleiro
+        return render(request, 'jogo_da_velha.html', dados)
+    elif vitoria == 1:
+        vitorioso = tabuleiro.jogador1
+    else:
+        vitorioso = tabuleiro.jogador2
+
+    if user == vitorioso:
+        dados['status'] = 'Vitoria'
+    else:
+        dados['status'] = 'Voce Perdeu'
+
+    if tabuleiro.jogador1 == user:
+        tabuleiro.jogador1 = None
+        tabuleiro.save()
+    elif tabuleiro.jogador2 == user:
+        tabuleiro.jogador2 = None
+
+    tabuleiro.save()
+    return render(request, 'final.html', dados)
+
 
 
 @login_required(login_url='/login/')
@@ -74,7 +104,6 @@ def abandonar_jg(request, id_tabuleiro):
     elif dados['tabuleiro'].jogador2 == user:
         dados['tabuleiro'].jogador2 = None
     dados['tabuleiro'].finalizar_jogo()
-    dados['tabuleiro'].save()
 
     return render(request, 'tabuleiro.html', dados)
 
@@ -84,28 +113,13 @@ def registrar_jogada(request, id_tabuleiro, casa):
     dados = {}
     user = request.user
     tabuleiro = Tabuleiro.objects.get(id=id_tabuleiro)
-    vitoria = tabuleiro.e_vitoria()
-    if vitoria:
-        if vitoria == 1:
-            vitorioso = tabuleiro.jogador1
-        elif vitoria == 2:
-            vitorioso = tabuleiro.jogador2
-        if user == vitorioso:
-            dados['status'] = 'Vitoria'
-        else:
-            dados['status'] = 'Voce Perdeu'
-        if tabuleiro.jogador1 == user:
-            tabuleiro.jogador1 = None
-        elif tabuleiro.jogador2 == user:
-            tabuleiro.jogador2 = None
-        #tabuleiro.save()
-        return render(request, 'final.html', dados)
-    else:
-        if tabuleiro.jogador_da_vez == user:
-            tabuleiro.registrar_movimento(casa)
-            tabuleiro.troca_vez_jogador()
-        dados['tabuleiro'] = tabuleiro
-        return render(request, 'tabuleiro.html', dados)
+
+
+    if tabuleiro.jogador_da_vez == user:
+        tabuleiro.registrar_movimento(casa)
+        tabuleiro.troca_vez_jogador()
+    dados['tabuleiro'] = tabuleiro
+    return render(request, 'tabuleiro.html', dados)
 
 
 def registra_usuario(request):

@@ -9,7 +9,7 @@ class Tabuleiro(models.Model):
     jogador1 = models.ForeignKey(User, related_name='jogador1', blank=True, null=True, on_delete=models.SET(None))
     jogador2 = models.ForeignKey(User, related_name='jogador2', blank=True, null=True, on_delete=models.SET(None))
     jogador_da_vez = models.ForeignKey(User, related_name='jogador_da_vez', blank=True, null=True, on_delete=models.SET(None))
-    tempo_ultima_jogada = models.DateField(verbose_name="Ultima Jogada",null=True, blank=True)
+    tempo_ultima_jogada = models.DateTimeField(verbose_name="Ultima Jogada",null=True, blank=True)
     casa1 = models.IntegerField()
     casa2 = models.IntegerField()
     casa3 = models.IntegerField()
@@ -38,7 +38,7 @@ class Tabuleiro(models.Model):
     def iniciar_jogo(self):
         self.finalizar_jogo()
         self.jogador_da_vez = self.jogador1
-        self.tempo_ultima_jogada = datetime.now()
+        self.tempo_ultima_jogada = datetime.now().date()
         self.save()
 
     def get_jogador_da_vez(self):
@@ -50,8 +50,38 @@ class Tabuleiro(models.Model):
             return 0
 
 
+    def get_campo1(self):
+        return self.casa1
+
+    def get_campo2(self):
+        return self.casa2
+
+    def get_campo3(self):
+        return self.casa3
+
+    def get_campo4(self):
+        return self.casa4
+
+    def get_campo5(self):
+        return self.casa5
+
+    def get_campo6(self):
+        return self.casa6
+
+    def get_campo7(self):
+        return self.casa7
+
+    def get_campo8(self):
+        return self.casa8
+
+    def get_campo9(self):
+        return self.casa9
+
+
     def get_tempo_ultima_jogada(self):
-        return self.tempo_ultima_jogada
+        if self.tempo_ultima_jogada:
+            return self.tempo_ultima_jogada.strftime("%H %M %S")
+        return None
 
 
     def e_jogada_atrasado(self):
@@ -106,7 +136,7 @@ class Tabuleiro(models.Model):
         else:
             if self.casa9 == 0:
                 self.casa9 = self.get_jogador_da_vez()
-        #self.tempo_ultima_jogada = datetime.now().date()
+        self.tempo_ultima_jogada = datetime.now().date()
         self.save()
 
 
@@ -146,7 +176,7 @@ class Tabuleiro(models.Model):
             for solucao in solucoes:
                 flag_da_vitoria = 1
                 for coordenada in solucao:
-                    if not casa(coordenada):
+                    if not casa(coordenada) == jogador:
                         flag_da_vitoria = 0
                 if flag_da_vitoria == 1:
                     return jogador
