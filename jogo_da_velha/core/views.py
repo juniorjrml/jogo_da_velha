@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from .models import Tabuleiro, User
 from .form_user import UserForm
 from django.contrib.auth.decorators import login_required
+from datetime import datetime, timedelta
 
 
 @login_required(login_url='/login/')
@@ -17,7 +18,6 @@ def submit_login(request):
         nome = request.POST.get('usuario')
         senha = request.POST.get('senha')
         usuario = authenticate(username=nome, password=senha)
-        print(usuario)
         if usuario:
             login(request, usuario)
         else:
@@ -73,9 +73,24 @@ def abandonar_jg(request, id_tabuleiro):
         dados['tabuleiro'].jogador1 = None
     elif dados['tabuleiro'].jogador2 == user:
         dados['tabuleiro'].jogador2 = None
+    dados['tabuleiro'].finalizar_jogo()
     dados['tabuleiro'].save()
 
     return render(request, 'tabuleiro.html', dados)
+
+@login_required(login_url='/login/')
+def registrar_jogada(request, id_tabuleiro, casa):
+    dados = {}
+    tabuleiro = Tabuleiro.objects.get(id=id_tabuleiro)
+    tabuleiro.registrar_movimento(casa)
+    tabuleiro.troca_vez_jogador()
+
+    print(tabuleiro.e_jogada_atrasado())
+
+    dados['tabuleiro'] = tabuleiro
+
+    return render(request, 'tabuleiro.html', dados)
+
 
 
 def registra_usuario(request):

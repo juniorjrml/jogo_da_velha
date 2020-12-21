@@ -1,7 +1,11 @@
 {% extends "model-page.html" %}
 
 {% block content %}
+{% if not tabuleiro.tem_vaga and not tabuleiro.tempo_ultima_jogada %}
+        {{tabuleiro.iniciar_jogo}}
+{% else %}
 
+{% endif %}
 <table>
     <tr>
         <td> <b>Tabuleiro</b> </td>
@@ -32,16 +36,26 @@
             <table border="1">
 
                 <tr>
-                    <td><a href=""><div><h2>{{ tabuleiro.casa1 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa2 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa3 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/1"><div><h2>{{ tabuleiro.casa1 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/2"><div><h2>{{ tabuleiro.casa2 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/3"><div><h2>{{ tabuleiro.casa3 }}</h2></div></a></td>
                 </tr>
                 <tr>
-                    <td><a href=""><div><h2>{{ tabuleiro.casa4 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa5 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa6 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/4"><div><h2>{{ tabuleiro.casa4 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/5"><div><h2>{{ tabuleiro.casa5 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/6"><div><h2>{{ tabuleiro.casa6 }}</h2></div></a></td>
                 </tr>
                 <tr>
-                    <td><a href=""><div><h2>{{ tabuleiro.casa7 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa8 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa9 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/7"><div><h2>{{ tabuleiro.casa7 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/8"><div><h2>{{ tabuleiro.casa8 }}</h2></div></a></td>
+                    <td><a href="/tabuleiro/jogada/{{ tabuleiro.id }}/9"><div><h2>{{ tabuleiro.casa9 }}</h2></div></a></td>
                 </tr>
             </table>
         </td>
+        <td>
+            Ultima jogada: {{ tabuleiro.get_tempo_ultima_jogada }}
+        </td>
+
         <td>
             {% if tabuleiro.tem_vaga and tabuleiro.get_jogador1 != user and tabuleiro.get_jogador2 != user %}
                 <a href="/tabuleiro/registrajogador/{{ tabuleiro.id }}"><h6>Entre Nessa Partida</h6></a>
@@ -49,8 +63,6 @@
                 <a href="/tabuleiro/abandonar/{{ tabuleiro.id }}"><h6>Abandonar</h6></a>
             {% endif %}
         </td>
-        <td>opção 1</td>
-        <td>opção 1</td>
     </tr>
 </table>
 

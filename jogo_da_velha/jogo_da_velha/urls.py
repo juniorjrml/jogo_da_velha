@@ -26,12 +26,10 @@ urlpatterns = [
     path('tabuleiro/<int:id_tabuleiro>', views.tabuleiro),
     path('tabuleiro/registrajogador/<int:id_tabuleiro>', views.registrar_jg),
     path('tabuleiro/abandonar/<int:id_tabuleiro>', views.abandonar_jg),
+    path('tabuleiro/jogada/<int:id_tabuleiro>/<int:casa>', views.registrar_jogada),
     path('usuario/register', views.registra_usuario),
     path('login/', views.login_usuario),
     path('login/submit', views.submit_login),
     path('logout/', views.logout_user)
 ]
 
-urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls')),
-]
