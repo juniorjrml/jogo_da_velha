@@ -2,22 +2,56 @@
 
 {% block content %}
 
+<table>
+    <tr>
+        <td> <b>Tabuleiro</b> </td>
+        <td> <b>Jogador 1</b> </td>
+        <td> <b>Jogador 2</b> </td>
+        <td> <b>Jogador da Vez</b> </td>
+    </tr>
+    <tr>
+        <td> {{ tabuleiro.nome }} </td>
+        <td>
+            {% if not tabuleiro.jogador1 %}
+                Sem Jogador!
+            {% else %}
+                {{ tabuleiro.jogador1 }}
+            {% endif %}
+        </td>
+        <td>
+            {% if not tabuleiro.jogador2 %}
+                Sem Jogador!
+            {% else %}
+                {{ tabuleiro.jogador2 }}
+            {% endif %}
+        </td>
+        <td>{{ tabuleiro.jogador_da_vez }}</td>
+    </tr>
+    <tr>
+        <td>
+            <table border="1">
 
-<table border="1">
-    <tr>
-        <td> <h3>{{ tabuleiro.nome }}!</h3> </td> <td>{{ tabuleiro.jogador1 }}</td> <td>{{ tabuleiro.jogador2 }}</td> <td>{{ tabuleiro.jogador_da_vez }}</td>
+                <tr>
+                    <td><a href=""><div><h2>{{ tabuleiro.casa1 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa2 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa3 }}</h2></div></a></td>
+                </tr>
+                <tr>
+                    <td><a href=""><div><h2>{{ tabuleiro.casa4 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa5 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa6 }}</h2></div></a></td>
+                </tr>
+                <tr>
+                    <td><a href=""><div><h2>{{ tabuleiro.casa7 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa8 }}</h2></div></a></td> <td><a href=""><div><h2>{{ tabuleiro.casa9 }}</h2></div></a></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            {% if tabuleiro.tem_vaga and tabuleiro.get_jogador1 != user and tabuleiro.get_jogador2 != user %}
+                <a href="/tabuleiro/registrajogador/{{ tabuleiro.id }}"><h6>Entre Nessa Partida</h6></a>
+            {% elif tabuleiro.get_jogador1 == user or tabuleiro.get_jogador2 == user %}
+                <a href="/tabuleiro/abandonar/{{ tabuleiro.id }}"><h6>Abandonar</h6></a>
+            {% endif %}
+        </td>
+        <td>opção 1</td>
+        <td>opção 1</td>
     </tr>
-    <tr>
-        <td><a href=""><div>{{ tabuleiro.casa1 }}</div></a></td> <td><a href="">{{ tabuleiro.casa2 }}</a></td> <td><a href="">{{ tabuleiro.casa3 }}</a></td>
-    </tr>
-    <tr>
-        <td><a href="">{{ tabuleiro.casa4 }}</a></td> <td><a href="">{{ tabuleiro.casa5 }}</a></td> <td><a href="">{{ tabuleiro.casa6 }}</a></td>
-    </tr>
-    <tr>
-        <td><a href="">{{ tabuleiro.casa7 }}</a></td> <td><a href="">{{ tabuleiro.casa8 }}</a></td> <td><a href="">{{ tabuleiro.casa9 }}</a></td>
-    </tr>
-
-
 </table>
 
 {% endblock %}

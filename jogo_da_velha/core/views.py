@@ -39,10 +39,42 @@ def lista_tabuleiros(request):
     dados = {'tabuleiros': tabuleiros}
     return render(request, 'tabuleiros.html', dados)
 
+
 @login_required(login_url='/login/')
 def tabuleiro(request, id_tabuleiro):
     dados = {}
     dados['tabuleiro'] = Tabuleiro.objects.get(id=id_tabuleiro)
+    return render(request, 'tabuleiro.html', dados)
+
+
+@login_required(login_url='/login/')
+def registrar_jg(request, id_tabuleiro):
+    dados = {}
+    user = request.user
+    dados['tabuleiro'] = Tabuleiro.objects.get(id=id_tabuleiro)
+
+    if not dados['tabuleiro'].jogador1:
+        if dados['tabuleiro'].jogador2 != user:
+            dados['tabuleiro'].jogador1 = user
+    elif not dados['tabuleiro'].jogador2:
+        if dados['tabuleiro'].jogador1 != user:
+            dados['tabuleiro'].jogador2 = user
+    dados['tabuleiro'].save()
+
+    return render(request, 'tabuleiro.html', dados)
+
+@login_required(login_url='/login/')
+def abandonar_jg(request, id_tabuleiro):
+    dados = {}
+    user = request.user
+    dados['tabuleiro'] = Tabuleiro.objects.get(id=id_tabuleiro)
+
+    if dados['tabuleiro'].jogador1 == user:
+        dados['tabuleiro'].jogador1 = None
+    elif dados['tabuleiro'].jogador2 == user:
+        dados['tabuleiro'].jogador2 = None
+    dados['tabuleiro'].save()
+
     return render(request, 'tabuleiro.html', dados)
 
 
