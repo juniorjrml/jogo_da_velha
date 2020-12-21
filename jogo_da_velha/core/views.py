@@ -78,19 +78,34 @@ def abandonar_jg(request, id_tabuleiro):
 
     return render(request, 'tabuleiro.html', dados)
 
+
 @login_required(login_url='/login/')
 def registrar_jogada(request, id_tabuleiro, casa):
     dados = {}
+    user = request.user
     tabuleiro = Tabuleiro.objects.get(id=id_tabuleiro)
-    tabuleiro.registrar_movimento(casa)
-    tabuleiro.troca_vez_jogador()
+    vitoria = tabuleiro.e_vitoria()
+    if vitoria:
+        if vitoria == 1:
+            vitorioso = tabuleiro.jogador1
+        elif vitoria == 2:
+            vitorioso = tabuleiro.jogador2
+        if user == vitorioso:
+            dados['status'] = 'Vitoria'
+        else:
+            dados['status'] = 'Voce Perdeu'
+        if tabuleiro.jogador1 == user:
+            tabuleiro.jogador1 = None
+        elif tabuleiro.jogador2 == user:
+            tabuleiro.jogador2 = None
+        #tabuleiro.save()
+        return render(request, 'final.html', dados)
 
-    print(tabuleiro.e_jogada_atrasado())
-
-    dados['tabuleiro'] = tabuleiro
-
-    return render(request, 'tabuleiro.html', dados)
-
+    else:
+        tabuleiro.registrar_movimento(casa)
+        tabuleiro.troca_vez_jogador()
+        dados['tabuleiro'] = tabuleiro
+        return render(request, 'tabuleiro.html', dados)
 
 
 def registra_usuario(request):

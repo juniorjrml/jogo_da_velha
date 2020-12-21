@@ -118,3 +118,38 @@ class Tabuleiro(models.Model):
         else:
             self.finalizar_jogo()
         self.save()
+
+
+    def e_vitoria(self):
+        jogadores = [1,2]
+        tabu =[[self.casa1, self.casa2, self.casa3],
+            [self.casa4, self.casa5, self.casa6],
+            [self.casa7, self.casa8, self.casa9]]
+        def casa(coord):
+            if tabu[coord[0]][coord[1]] == 1:
+                return True
+            else:
+                return False
+
+        solucoes = [[(0, 0), (0, 1), (0, 2)],
+                    [(0, 0), (1, 0), (2, 0)],
+                    #[],
+                    [(2, 2), (1, 2), (0, 2)],  # 0|
+                    [(2, 2), (1, 2), (0, 2)],  # __
+                    #[],
+                    [(1, 1), (0, 0), (2, 2)],  # /
+                    [(1, 1), (0, 2), (2, 0)],  # \
+                    [(1, 1), (0, 1), (2, 1)],  # |
+                    [(1, 1), (1, 0), (1, 2)]]  # --
+
+        for jogador in jogadores:
+            for solucao in solucoes:
+                flag_da_vitoria = 1
+                for coordenada in solucao:
+                    if not casa(coordenada):
+                        flag_da_vitoria = 0
+                if flag_da_vitoria == 1:
+                    return jogador
+        return False
+
+
