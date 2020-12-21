@@ -100,10 +100,10 @@ def registrar_jogada(request, id_tabuleiro, casa):
             tabuleiro.jogador2 = None
         #tabuleiro.save()
         return render(request, 'final.html', dados)
-
     else:
-        tabuleiro.registrar_movimento(casa)
-        tabuleiro.troca_vez_jogador()
+        if tabuleiro.jogador_da_vez == user:
+            tabuleiro.registrar_movimento(casa)
+            tabuleiro.troca_vez_jogador()
         dados['tabuleiro'] = tabuleiro
         return render(request, 'tabuleiro.html', dados)
 
